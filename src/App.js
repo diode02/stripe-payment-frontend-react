@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import StripeWrapper from "./components/StripeWrapper";
+import Payment from "./components/Payment";
+import AuthTokenInput from "./components/AuthTokenInput";
+import { Container } from "./components/StyledComponents";
+import PaymentIntent from "./components/PaymentIntentToken";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <StripeWrapper>
+        <AuthTokenInput />
+        <PaymentIntent />
+        <Payment />
+        {/* Add other components/screens as needed */}
+      </StripeWrapper>
+    </Container>
   );
 }
 
