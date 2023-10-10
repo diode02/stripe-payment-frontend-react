@@ -1,13 +1,13 @@
 // AuthTokenInput.js
 import { useEffect, useState } from "react";
-import { InputContainer, StyledInput, StyledButton } from "./StyledComponents";
+import { InputContainer, StyledInput } from "./StyledComponents";
 
 const AuthTokenInput = () => {
   const [token, setToken] = useState("");
 
-  const handleTokenSubmit = () => {
-    localStorage.setItem("authToken", token);
-  };
+  useEffect(() => {
+    if (token) localStorage.setItem("authToken", token);
+  }, [token]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
@@ -23,7 +23,6 @@ const AuthTokenInput = () => {
         onChange={(e) => setToken(e.target.value)}
         placeholder="Enter Auth Token"
       />
-      <StyledButton onClick={handleTokenSubmit}>Store Token</StyledButton>
     </InputContainer>
   );
 };

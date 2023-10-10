@@ -1,18 +1,28 @@
 // AuthTokenInput.js
-import { useState } from "react";
-import { InputContainer, StyledInput, StyledButton } from "./StyledComponents";
+import { useEffect, useState } from "react";
+import { InputContainer, StyledInput } from "./StyledComponents";
 
 const PaymentIntent = () => {
   const [token, setToken] = useState("");
 
-  const handleTokenSubmit = () => {
-    localStorage.setItem("paymentIntent", token);
-  };
+  useEffect(() => {
+    if (token) localStorage.setItem("paymentIntent", token);
+  }, [token]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("paymentIntent");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
   return (
     <InputContainer>
-      <StyledInput value={token} onChange={(e) => setToken(e.target.value)} placeholder="Enter Payment Intent" />
-      <StyledButton onClick={handleTokenSubmit}>Store Payment Intent</StyledButton>
+      <StyledInput
+        value={token}
+        onChange={(e) => setToken(e.target.value)}
+        placeholder="Enter Payment Intent"
+      />
     </InputContainer>
   );
 };

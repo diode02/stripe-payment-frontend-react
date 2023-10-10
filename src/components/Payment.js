@@ -1,6 +1,5 @@
 // Payment.js
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import axios from "axios";
 import { InputContainer, StyledButton } from "./StyledComponents";
 
 const Payment = () => {
@@ -23,18 +22,24 @@ const Payment = () => {
   };
 
   const handlePayment = async () => {
-    const { data: clientSecret } = await axios.get("/path/to/your/backend/payment-intent");
+    const clientSecret = localStorage.getItem("paymentIntent");
+    if (!clientSecret) {
+      alert("Payment intent not found");
+      return;
+    }
 
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
-      }
+      },
     });
 
     if (result.error) {
-      console.error(result.error.message);
+      console.error(result.error);
+      alert("Payment failed", result.error.message);
     } else {
       // Payment succeeded
+      alert("Payment succeeded");
     }
   };
 
