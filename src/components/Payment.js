@@ -35,10 +35,10 @@ const Payment = () => {
     });
 
     if (result.error) {
-      console.error(result.error);
+      console.error(result);
       alert("Payment failed", result.error.message);
     } else {
-      // Payment succeeded
+       // Payment succeeded
       alert("Payment succeeded");
     }
   };
