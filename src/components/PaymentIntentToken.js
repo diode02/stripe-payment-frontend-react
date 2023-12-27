@@ -18,6 +18,7 @@ const PaymentIntent = () => {
 
   return (
     <InputContainer>
+    <h3>Payment Intent</h3>
       <StyledInput
         value={token}
         onChange={(e) => setToken(e.target.value)}

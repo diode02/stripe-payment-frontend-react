@@ -2,7 +2,7 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { InputContainer, StyledButton } from "./StyledComponents";
 
-const Payment = () => {
+const AddPaymentMethod = () => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -28,7 +28,7 @@ const Payment = () => {
       return;
     }
 
-    const result = await stripe.confirmCardPayment(clientSecret, {
+    const result = await stripe.confirmCardSetup(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
       },
@@ -39,17 +39,17 @@ const Payment = () => {
       alert("Payment failed", result.error.message);
     } else {
       // Payment succeeded
-      alert("Payment succeeded");
+      alert("Card Added succeeded");
     }
   };
 
   return (
     <InputContainer>
-      <h3>Payment</h3>
+    <h3>Add Payment Method</h3>
       <CardElement options={cardStyle} />
-      <StyledButton onClick={handlePayment}>Pay</StyledButton>
+      <StyledButton onClick={handlePayment}>Add</StyledButton>
     </InputContainer>
   );
 };
 
-export default Payment;
+export default AddPaymentMethod;

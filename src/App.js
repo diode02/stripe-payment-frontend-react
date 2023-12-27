@@ -1,17 +1,26 @@
 // App.js
-import StripeWrapper from "./components/StripeWrapper";
-import Payment from "./components/Payment";
+import AddPaymentMethod from "./components/AddPaymentMethod";
 import AuthTokenInput from "./components/AuthTokenInput";
-import { Container } from "./components/StyledComponents";
+import Payment from "./components/Payment";
 import PaymentIntent from "./components/PaymentIntentToken";
+import StripeWrapper from "./components/StripeWrapper";
+import { Container } from "./components/StyledComponents";
+
+import React, { useState } from "react";
+// ... other imports ...
 
 function App() {
+  const [showPayment, setShowPayment] = useState(true); // Add state to toggle between components
+
   return (
     <Container>
       <StripeWrapper>
         <AuthTokenInput />
         <PaymentIntent />
-        <Payment />
+        {showPayment ? <Payment /> : <AddPaymentMethod />}
+        <button onClick={() => setShowPayment(!showPayment)}>
+          {showPayment ? "Switch to Add Payment Method" : "Switch to Payment"}
+        </button>
         {/* Add other components/screens as needed */}
       </StripeWrapper>
     </Container>

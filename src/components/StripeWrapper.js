@@ -2,7 +2,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-const publicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
+const publicKey = localStorage.getItem("publicTestKey");
 
 const stripePromise = loadStripe(publicKey);
 
