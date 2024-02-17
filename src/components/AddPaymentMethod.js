@@ -36,10 +36,10 @@ const AddPaymentMethod = () => {
 
     if (result.error) {
       console.error(result);
-      alert("Payment failed", result.error.message);
+      alert("Payment Method addition failed", result.error.message);
     } else {
       // Payment succeeded
-      alert("Card Added succeeded");
+      alert("Payment Method Added");
     }
   };
 
