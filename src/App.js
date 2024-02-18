@@ -7,6 +7,8 @@ import StripeWrapper from "./components/StripeWrapper";
 import { Container } from "./components/StyledComponents";
 
 import React, { useState } from "react";
+// import AuthenticatePaymentMethod from "./components/AuthenticatePaymentMethod";
+import PaymentAuthentication from "./components/PaymentAuthentication";
 // ... other imports ...
 
 function App() {
@@ -21,6 +23,9 @@ function App() {
         <button onClick={() => setShowPayment(!showPayment)}>
           {showPayment ? "Switch to Add Payment Method" : "Switch to Payment"}
         </button>
+
+        <PaymentAuthentication clientSecret="" /> {/* Add client secret */}
+        {/* pi_3OkUyCAzlYto0TMq2pMvs0oW_secret_7Z7mewaJ49mUbZuqDjShs8xy2 */}
         {/* Add other components/screens as needed */}
       </StripeWrapper>
     </Container>
