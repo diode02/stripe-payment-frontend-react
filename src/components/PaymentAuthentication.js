@@ -1,8 +1,23 @@
-import React from "react";
 import { useStripe } from "@stripe/react-stripe-js";
+import React, { useEffect, useState } from "react";
+import { InputContainer, StyledButton, StyledInput } from "./StyledComponents";
 
-const PaymentAuthentication = ({ clientSecret }) => {
+const PaymentAuthentication = () => {
   const stripe = useStripe();
+
+  const [paymentMethodId, setPaymentMethodId] = useState("");
+
+  useEffect(() => {
+    if (paymentMethodId)
+      localStorage.setItem("paymentMethodId", paymentMethodId);
+  }, [paymentMethodId]);
+
+  useEffect(() => {
+    const paymentMethodId = localStorage.getItem("paymentMethodId");
+    if (paymentMethodId) {
+      setPaymentMethodId(paymentMethodId);
+    }
+  }, []);
 
   const handleAuthentication = async () => {
     if (!stripe) {
@@ -10,10 +25,16 @@ const PaymentAuthentication = ({ clientSecret }) => {
       return;
     }
 
+    const clientSecret = localStorage.getItem("paymentIntent");
+    if (!clientSecret) {
+      alert("Payment intent not found");
+      return;
+    }
+
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       clientSecret,
       {
-        payment_method: "", // Use the payment method ID from the PaymentMethod
+        payment_method: paymentMethodId, // Use the payment method ID from the PaymentMethod
       }
     );
 
@@ -27,10 +48,16 @@ const PaymentAuthentication = ({ clientSecret }) => {
   };
 
   return (
-    <div>
-      <h2>Your payment requires additional verification</h2>
-      <button onClick={handleAuthentication}>Verify Payment</button>
-    </div>
+    <InputContainer>
+      <h2>Payment Method need authentication</h2>
+      <p>Payment Method (stripe payment method Id)</p>
+      <StyledInput
+        value={paymentMethodId}
+        onChange={(e) => setPaymentMethodId(e.target.value)}
+        placeholder="Enter Stripe Payment Method Id"
+      />
+      <StyledButton onClick={handleAuthentication}>Verify Payment</StyledButton>
+    </InputContainer>
   );
 };
 
